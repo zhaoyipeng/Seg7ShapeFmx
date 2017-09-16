@@ -8,3 +8,7 @@ __history
 *.exe
 *.dll
 bin/*
+/Seven.res
+/Seven.stat
+/TestPrj/Bingo.res
+/TestPrj/Bingo.stat

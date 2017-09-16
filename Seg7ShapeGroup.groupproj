@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{C382F499-4AE3-407A-B04E-BB3697D9261C}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Seven.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="TestPrj\Bingo.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Seven">
+        <MSBuild Projects="Seven.dproj"/>
+    </Target>
+    <Target Name="Seven:Clean">
+        <MSBuild Projects="Seven.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Seven:Make">
+        <MSBuild Projects="Seven.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Bingo">
+        <MSBuild Projects="TestPrj\Bingo.dproj"/>
+    </Target>
+    <Target Name="Bingo:Clean">
+        <MSBuild Projects="TestPrj\Bingo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Bingo:Make">
+        <MSBuild Projects="TestPrj\Bingo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Seven;Bingo"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Seven:Clean;Bingo:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Seven:Make;Bingo:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

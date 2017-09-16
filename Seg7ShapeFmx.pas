@@ -1,97 +1,98 @@
-unit Seg7ShapeFmx;
+Ôªøunit Seg7ShapeFmx;
 
 interface
 
 uses
-    System.SysUtils,
-    System.Classes, System.Types, System.Rtti, System.UITypes, System.UIConsts,
-    FMX.Types, FMX.Controls, FMX.Objects;
+  System.SysUtils,
+  System.Classes, System.Types, System.Rtti, System.UITypes, System.UIConsts,
+  FMX.Types, FMX.Controls, FMX.Objects, System.Math.Vectors;
 
 type
-    TSeg7Shape = class(TShape)
-
-    private
-        FSEG_A: Boolean;
-        FSEG_B: Boolean;
-        FSEG_C: Boolean;
-        FSEG_D: Boolean;
-        FSEG_E: Boolean;
-        FSEG_F: Boolean;
-        FSEG_G: Boolean;
-        FNum: Byte;
-
-        procedure SetSeg_a(const Value: Boolean);
-        procedure SetSeg_b(const Value: Boolean);
-        procedure SetSeg_c(const Value: Boolean);
-        procedure SetSeg_d(const Value: Boolean);
-        procedure SetSeg_e(const Value: Boolean);
-        procedure SetSeg_f(const Value: Boolean);
-        procedure SetSeg_g(const Value: Boolean);
-        procedure SetNum(const Value: Byte);
-
-        { Private êÈåæ }
-
-    protected
-        { Protected êÈåæ }
-    public
-        constructor Create(AOwner: TComponent); override;
-        destructor Destroy; override;
-        procedure Paint; override;
-
-        { Public êÈåæ }
-    published
-        { Published êÈåæ }
-        property Num: Byte read FNum write SetNum;
-        property SEG_A: Boolean read FSEG_A write SetSeg_a;
-        property SEG_B: Boolean read FSEG_B write SetSeg_b;
-        property SEG_C: Boolean read FSEG_C write SetSeg_c;
-        property SEG_D: Boolean read FSEG_D write SetSeg_d;
-        property SEG_E: Boolean read FSEG_E write SetSeg_e;
-        property SEG_F: Boolean read FSEG_F write SetSeg_f;
-        property SEG_G: Boolean read FSEG_G write SetSeg_g;
-        property Fill;
-        property Stroke;
-
-        property Align;
-        property Anchors;
-        property ClipChildren default False;
-        property ClipParent default False;
-        // property Cursor default crDefault;
-        property DesignVisible default True;
-        // property DragMode default TDragMode.dmManual;
-        property EnableDragHighlight default True;
-        property Enabled default True;
-        property Locked default False;
-        property Height;
-        property HitTest default True;
-        property Margins;
-        property Opacity;
-        property Padding;
-        property PopupMenu;
-        property Position;
-        property RotationAngle;
-        property RotationCenter;
-        property Scale;
-        property Visible default True;
-        property Width;
-        property OnApplyStyleLookup;
-        property OnDragEnter;
-        property OnDragLeave;
-        property OnDragOver;
-        property OnDragDrop;
-        property OnDragEnd;
-        property OnClick;
-        property OnDblClick;
-        property OnMouseDown;
-        property OnMouseMove;
-        property OnMouseUp;
-        property OnMouseWheel;
-        property OnMouseEnter;
-        property OnMouseLeave;
-        property OnPainting;
-        property OnPaint;
-        property OnResize;
-    end;
+  TSeg7Shape = class(TShape)
+  const
+    NUM_DATA: array [0..15] of Byte = (
+      $3F, $06, $5B, $4F, $66, $6D, $7D, $07, $7F, $6F, // 0..9
+      $77, $7C, $39, $5E, $79, $71);                    // a..f
+  private
+    { Private ÂÆ£Ë®Ä }
+    FNum: Byte;
+    FData: Byte;
+    procedure SetSeg_a(const Value: Boolean);
+    procedure SetSeg_b(const Value: Boolean);
+    procedure SetSeg_c(const Value: Boolean);
+    procedure SetSeg_d(const Value: Boolean);
+    procedure SetSeg_e(const Value: Boolean);
+    procedure SetSeg_f(const Value: Boolean);
+    procedure SetSeg_g(const Value: Boolean);
+    procedure SetNum(const Value: Byte);
+    procedure SetData(const Value: Byte);
+    function GetSEG_A: Boolean;
+    function GetSEG_B: Boolean;
+    function GetSEG_C: Boolean;
+    function GetSEG_D: Boolean;
+    function GetSEG_E: Boolean;
+    function GetSEG_F: Boolean;
+    function GetSEG_G: Boolean;
+  protected
+    { Protected ÂÆ£Ë®Ä }
+    procedure SetBit(idx: Integer; Value: Boolean);
+    procedure Paint; override;
+  public
+    { Public ÂÆ£Ë®Ä }
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
+  published
+    { Published ÂÆ£Ë®Ä }
+    property Data: Byte read FData write SetData;
+    property Num: Byte read FNum write SetNum stored False;
+    property SEG_A: Boolean read GetSEG_A write SetSeg_a stored False;
+    property SEG_B: Boolean read GetSEG_B write SetSeg_b stored False;
+    property SEG_C: Boolean read GetSEG_C write SetSeg_c stored False;
+    property SEG_D: Boolean read GetSEG_D write SetSeg_d stored False;
+    property SEG_E: Boolean read GetSEG_E write SetSeg_e stored False;
+    property SEG_F: Boolean read GetSEG_F write SetSeg_f stored False;
+    property SEG_G: Boolean read GetSEG_G write SetSeg_g stored False;
+    property Fill;
+    property Stroke;
+    property Align;
+    property Anchors;
+    property ClipChildren default False;
+    property ClipParent default False;
+    property Cursor;
+    property DragMode;
+    property EnableDragHighlight;
+    property Enabled;
+    property Locked;
+    property Height;
+    property HitTest;
+    property Margins;
+    property Opacity;
+    property Padding;
+    property PopupMenu;
+    property Position;
+    property RotationAngle;
+    property RotationCenter;
+    property Scale;
+    property Visible;
+    property Width;
+    property OnApplyStyleLookup;
+    property OnDragEnter;
+    property OnDragLeave;
+    property OnDragOver;
+    property OnDragDrop;
+    property OnDragEnd;
+    property OnClick;
+    property OnDblClick;
+    property OnMouseDown;
+    property OnMouseMove;
+    property OnMouseUp;
+    property OnMouseWheel;
+    property OnMouseEnter;
+    property OnMouseLeave;
+    property OnPainting;
+    property OnPaint;
+    property OnResize;
+  end;
 
 procedure Register;
 
@@ -99,440 +100,296 @@ implementation
 
 procedure Register;
 begin
-    RegisterComponents('SampleToos', [TSeg7Shape]);
+  RegisterComponents('SampleToos', [TSeg7Shape]);
 end;
 
-{ “”ÿ∞ç\ízéûÇÃèàóù }
 constructor TSeg7Shape.Create(AOwner: TComponent);
 begin
-    inherited;
-
-    FNum := $FF;
-    FSEG_A := True;
-    FSEG_B := True;
-    FSEG_C := True;
-    FSEG_D := True;
-    FSEG_E := True;
-    FSEG_F := True;
-    FSEG_G := True;
-    FVisible := True;
-
-    Height := 144;
-    Width := 100;
+  inherited;
+  FNum := 8;
+  FData := $7F;
+  Height := 144;
+  Width := 100;
 end;
 
 destructor TSeg7Shape.Destroy;
 begin
-    inherited;
+  inherited;
+end;
+
+function TSeg7Shape.GetSEG_A: Boolean;
+begin
+  Result := (FData and $01) <> 0;
+end;
+
+function TSeg7Shape.GetSEG_B: Boolean;
+begin
+  Result := (FData and $02) <> 0;
+end;
+
+function TSeg7Shape.GetSEG_C: Boolean;
+begin
+  Result := (FData and $04) <> 0;
+end;
+
+function TSeg7Shape.GetSEG_D: Boolean;
+begin
+  Result := (FData and $08) <> 0;
+end;
+
+function TSeg7Shape.GetSEG_E: Boolean;
+begin
+  Result := (FData and $10) <> 0;
+end;
+
+function TSeg7Shape.GetSEG_F: Boolean;
+begin
+  Result := (FData and $20) <> 0;
+end;
+
+function TSeg7Shape.GetSEG_G: Boolean;
+begin
+  Result := (FData and $40) <> 0;
 end;
 
 procedure TSeg7Shape.SetSeg_a(const Value: Boolean);
 begin
-    if (FSEG_A = Value) then
-        exit;
-    FSEG_A := Value;
-    Repaint;
+  SetBit(0, Value);
 end;
 
 procedure TSeg7Shape.SetSeg_b(const Value: Boolean);
 begin
-    if (FSEG_B = Value) then
-        exit;
-    FSEG_B := Value;
-    Repaint;
+  SetBit(1, Value);
 end;
 
 procedure TSeg7Shape.SetSeg_c(const Value: Boolean);
 begin
-    if (FSEG_C = Value) then
-        exit;
-    FSEG_C := Value;
-    Repaint;
+  SetBit(2, Value);
 end;
 
 procedure TSeg7Shape.SetSeg_d(const Value: Boolean);
 begin
-    if (FSEG_D = Value) then
-        exit;
-    FSEG_D := Value;
-    Repaint;
+  SetBit(3, Value);
 end;
 
 procedure TSeg7Shape.SetSeg_e(const Value: Boolean);
 begin
-    if (FSEG_E = Value) then
-        exit;
-    FSEG_E := Value;
-    Repaint;
+  SetBit(4, Value);
 end;
 
 procedure TSeg7Shape.SetSeg_f(const Value: Boolean);
 begin
-    if (FSEG_F = Value) then
-        exit;
-    FSEG_F := Value;
-    Repaint;
+  SetBit(5, Value);
 end;
 
 procedure TSeg7Shape.SetSeg_g(const Value: Boolean);
 begin
-    if (FSEG_G = Value) then
-        exit;
-    FSEG_G := Value;
+  SetBit(6, Value);
+end;
+
+procedure TSeg7Shape.SetBit(idx: Integer; Value: Boolean);
+var
+  mask: Byte;
+  newData: Byte;
+begin
+  mask := 1 shl idx;
+  newData := FData and (not mask);
+  if Value then
+    newData := newData or mask;
+  Data := newData;
+end;
+
+procedure TSeg7Shape.SetData(const Value: Byte);
+var
+  I: Integer;
+begin
+  if FData <> Value then
+  begin
+    FData := Value;
+    FNum := $FF;
+    for I := 0 to High(NUM_DATA) do
+    begin
+      if NUM_DATA[I] = FData then
+      begin
+        FNum := I;
+        Break;
+      end;
+    end;
     Repaint;
+  end;
 end;
 
 procedure TSeg7Shape.SetNum(const Value: Byte);
 begin
-    if (FNum = Value) then
-        exit;
-
+  if (FNum <> Value) and (Value in [0..15]) then
+  begin
     FNum := Value;
-    case FNum of
-        $0:
-            begin
-                FSEG_A := True;
-                FSEG_B := True;
-                FSEG_C := True;
-                FSEG_D := True;
-                FSEG_E := True;
-                FSEG_F := True;
-                FSEG_G := False;
-            end;
-        $1:
-            begin
-                FSEG_A := False;
-                FSEG_B := True;
-                FSEG_C := True;
-                FSEG_D := False;
-                FSEG_E := False;
-                FSEG_F := False;
-                FSEG_G := False;
-            end;
-        $2:
-            begin
-                FSEG_A := True;
-                FSEG_B := True;
-                FSEG_C := False;
-                FSEG_D := True;
-                FSEG_E := True;
-                FSEG_F := False;
-                FSEG_G := True;
-            end;
-        $3:
-            begin
-                FSEG_A := True;
-                FSEG_B := True;
-                FSEG_C := True;
-                FSEG_D := True;
-                FSEG_E := False;
-                FSEG_F := False;
-                FSEG_G := True;
-            end;
-        $4:
-            begin
-                FSEG_A := False;
-                FSEG_B := True;
-                FSEG_C := True;
-                FSEG_D := False;
-                FSEG_E := False;
-                FSEG_F := True;
-                FSEG_G := True;
-            end;
-        $5:
-            begin
-                FSEG_A := True;
-                FSEG_B := False;
-                FSEG_C := True;
-                FSEG_D := True;
-                FSEG_E := False;
-                FSEG_F := True;
-                FSEG_G := True;
-            end;
-        $6:
-            begin
-                FSEG_A := True;
-                FSEG_B := False;
-                FSEG_C := True;
-                FSEG_D := True;
-                FSEG_E := True;
-                FSEG_F := True;
-                FSEG_G := True;
-            end;
-        $7:
-            begin
-                FSEG_A := True;
-                FSEG_B := True;
-                FSEG_C := True;
-                FSEG_D := False;
-                FSEG_E := False;
-                FSEG_F := False;
-                FSEG_G := False;
-            end;
-        $8:
-            begin
-                FSEG_A := True;
-                FSEG_B := True;
-                FSEG_C := True;
-                FSEG_D := True;
-                FSEG_E := True;
-                FSEG_F := True;
-                FSEG_G := True;
-            end;
-        $9:
-            begin
-                FSEG_A := True;
-                FSEG_B := True;
-                FSEG_C := True;
-                FSEG_D := True;
-                FSEG_E := False;
-                FSEG_F := True;
-                FSEG_G := True;
-            end;
-        $A:
-            begin
-                FSEG_A := True;
-                FSEG_B := True;
-                FSEG_C := True;
-                FSEG_D := False;
-                FSEG_E := True;
-                FSEG_F := True;
-                FSEG_G := True;
-            end;
-        $B:
-            begin
-                FSEG_A := False;
-                FSEG_B := False;
-                FSEG_C := True;
-                FSEG_D := True;
-                FSEG_E := True;
-                FSEG_F := True;
-                FSEG_G := True;
-            end;
-        $C:
-            begin
-                FSEG_A := True;
-                FSEG_B := False;
-                FSEG_C := False;
-                FSEG_D := True;
-                FSEG_E := True;
-                FSEG_F := True;
-                FSEG_G := False;
-            end;
-        $D:
-            begin
-                FSEG_A := False;
-                FSEG_B := True;
-                FSEG_C := True;
-                FSEG_D := True;
-                FSEG_E := True;
-                FSEG_F := False;
-                FSEG_G := True;
-            end;
-        $E:
-            begin
-                FSEG_A := True;
-                FSEG_B := False;
-                FSEG_C := False;
-                FSEG_D := True;
-                FSEG_E := True;
-                FSEG_F := True;
-                FSEG_G := True;
-            end;
-        $F:
-            begin
-                FSEG_A := True;
-                FSEG_B := False;
-                FSEG_C := False;
-                FSEG_D := False;
-                FSEG_E := True;
-                FSEG_F := True;
-                FSEG_G := True;
-            end;
-    else
-        begin
-            { 10hà»è„éûÇÕï\é¶Ç≥ÇπÇ»Ç¢ÅB= ï€éùïœçX!
-              FSEG_A := False;
-              FSEG_B := False;
-              FSEG_C := False;
-              FSEG_D := False;
-              FSEG_E := False;
-              FSEG_F := False;
-              FSEG_G := False;
-            }
-        end;
-    end;
+    FData := NUM_DATA[FNum];
     Repaint;
+  end;
 end;
 
 procedure TSeg7Shape.Paint;
 var
-    Polygon: TPolygon;
-    cliw, clih: Single;
-    h, w, aw, ah: Single;
-    dw, dh: Single;
-    gw, gh: Single;
+  Polygon: TPolygon;
+  cliw, clih: Single;
+  h, w, aw, ah: Single;
+  dw, dh: Single;
+  gw, gh: Single;
 begin
-    if Visible = False then
-        exit;
-    cliw := Width - 1;
-    clih := Height - 1;
-    SEG_A := FSEG_A;
-    SEG_B := FSEG_B;
-    SEG_C := FSEG_C;
-    SEG_D := FSEG_D;
-    SEG_E := FSEG_E;
-    SEG_F := FSEG_F;
-    SEG_G := FSEG_G;
+  if Visible = False then
+    exit;
+  cliw := Width - 1;
+  clih := Height - 1;
 
-    /// / Base Point Calc //////////////////////////////////////////
-    h := clih * 0.1;
-    w := cliw * 0.8;
+  /// / Base Point Calc //////////////////////////////////////////
+  h := clih * 0.1;
+  w := cliw * 0.8;
 
-    ah := 1;
-    aw := cliw * 0.1;
+  ah := 1;
+  aw := cliw * 0.1;
 
-    gw := cliw * 0.1;
-    gh := (clih - h) / 2.0;
+  gw := cliw * 0.1;
+  gh := (clih - h) / 2.0;
 
-    dw := cliw * 0.1;
-    dh := clih - h;
+  dw := cliw * 0.1;
+  dh := clih - h;
 
-    try
-        /// /  êFê¸ê›íËÅ@///////////////////////////////////////////////
-        Canvas.Fill.Assign(Fill);
-        Canvas.Stroke.Assign(Stroke);
-        /// /////ì_ê›íË //////////////////////////////////////////////
-        SetLength(Polygon, 7);
-        /// ///////////// a ÇÃà íuÇÃèëÇ´çûÇ› ///////////////////////////
-        if SEG_A = True then
-        begin
-            Polygon[0].X := aw;
-            Polygon[0].Y := ah + h * 0.5;
-            Polygon[1].X := aw + w * 0.2;
-            Polygon[1].Y := ah;
-            Polygon[2].X := aw + w * 0.8;
-            Polygon[2].Y := ah;
-            Polygon[3].X := aw + w;
-            Polygon[3].Y := ah + h * 0.5;
-            Polygon[4].X := aw + w * 0.8;
-            Polygon[4].Y := ah + h;
-            Polygon[5].X := aw + w * 0.2;
-            Polygon[5].Y := ah + h;
-            Polygon[6].X := aw;
-            Polygon[6].Y := ah + h * 0.5;
-            Canvas.FillPolygon(Polygon, AbsoluteOpacity);
-            Canvas.DrawPolygon(Polygon, AbsoluteOpacity);
-        end;
-        /// ////////////// g à íuÇÃèëÇ´çûÇ› /////////////////////////////
-        if SEG_G = True then
-        begin
-            Polygon[0].X := gw;
-            Polygon[0].Y := gh + h * 0.5;
-            Polygon[1].X := gw + w * 0.2;
-            Polygon[1].Y := gh;
-            Polygon[2].X := gw + w * 0.8;
-            Polygon[2].Y := gh;
-            Polygon[3].X := gw + w;
-            Polygon[3].Y := gh + h * 0.5;
-            Polygon[4].X := gw + w * 0.8;
-            Polygon[4].Y := gh + h;
-            Polygon[5].X := gw + w * 0.2;
-            Polygon[5].Y := gh + h;
-            Polygon[6].X := gw;
-            Polygon[6].Y := gh + h * 0.5;
-            Canvas.FillPolygon(Polygon, AbsoluteOpacity);
-            Canvas.DrawPolygon(Polygon, AbsoluteOpacity);
-        end;
-        /// ////////////// d à íuÇÃèëÇ´çûÇ› /////////////////////////////
-        if SEG_D = True then
-        begin
-            Polygon[0].X := dw;
-            Polygon[0].Y := dh + h * 0.5;
-            Polygon[1].X := dw + w * 0.2;
-            Polygon[1].Y := dh;
-            Polygon[2].X := dw + w * 0.8;
-            Polygon[2].Y := dh;
-            Polygon[3].X := dw + w;
-            Polygon[3].Y := dh + h * 0.5;
-            Polygon[4].X := dw + w * 0.8;
-            Polygon[4].Y := dh + h;
-            Polygon[5].X := dw + w * 0.2;
-            Polygon[5].Y := dh + h;
-            Polygon[6].X := dw;
-            Polygon[6].Y := dh + h * 0.5;
-            Canvas.FillPolygon(Polygon, AbsoluteOpacity);
-            Canvas.DrawPolygon(Polygon, AbsoluteOpacity);
-        end;
-
-        SetLength(Polygon, 5);
-        /// ////////////// b à íuÇÃèëÇ´çûÇ› /////////////////////////////
-        if SEG_B = True then
-        begin
-            Polygon[0].X := aw + w;
-            Polygon[0].Y := ah + h * 0.5;
-            Polygon[1].X := aw + w * 0.8;
-            Polygon[1].Y := ah + h;
-            Polygon[2].X := gw + w * 0.8;
-            Polygon[2].Y := gh;
-            Polygon[3].X := aw + w;
-            Polygon[3].Y := gh + h * 0.5;
-            Polygon[4].X := aw + w;
-            Polygon[4].Y := ah + h * 0.5;
-            Canvas.FillPolygon(Polygon, AbsoluteOpacity);
-            Canvas.DrawPolygon(Polygon, AbsoluteOpacity);
-        end;
-        /// ////////////// c à íuÇÃèëÇ´çûÇ› /////////////////////////////
-        if SEG_C = True then
-        begin
-            Polygon[0].X := gw + w;
-            Polygon[0].Y := gh + h * 0.5;
-            Polygon[1].X := gw + w * 0.8;
-            Polygon[1].Y := gh + h;
-            Polygon[2].X := dw + w * 0.8;
-            Polygon[2].Y := dh;
-            Polygon[3].X := gw + w;
-            Polygon[3].Y := dh + h * 0.5;
-            Polygon[4].X := gw + w;
-            Polygon[4].Y := gh + h * 0.5;
-            Canvas.FillPolygon(Polygon, AbsoluteOpacity);
-            Canvas.DrawPolygon(Polygon, AbsoluteOpacity);
-        end;
-        /// ////////////// f à íuÇÃèëÇ´çûÇ› /////////////////////////////
-        if SEG_F = True then
-        begin
-            Polygon[0].X := aw;
-            Polygon[0].Y := ah + h * 0.5;
-            Polygon[1].X := aw + w * 0.2;
-            Polygon[1].Y := ah + h;
-            Polygon[2].X := gw + w * 0.2;
-            Polygon[2].Y := gh;
-            Polygon[3].X := gw;
-            Polygon[3].Y := gh + h * 0.5;
-            Polygon[4].X := aw;
-            Polygon[4].Y := ah + h * 0.5;
-            Canvas.FillPolygon(Polygon, AbsoluteOpacity);
-            Canvas.DrawPolygon(Polygon, AbsoluteOpacity);
-        end;
-        /// ////////////// eà íuÇÃèëÇ´çûÇ› /////////////////////////////
-        if SEG_E = True then
-        begin
-            Polygon[0].X := gw;
-            Polygon[0].Y := gh + h * 0.5;
-            Polygon[1].X := gw + w * 0.2;
-            Polygon[1].Y := gh + h;
-            Polygon[2].X := dw + w * 0.2;
-            Polygon[2].Y := dh;
-            Polygon[3].X := dw;
-            Polygon[3].Y := dh + h * 0.5;
-            Polygon[4].X := gw;
-            Polygon[4].Y := gh + h * 0.5;
-            Canvas.FillPolygon(Polygon, AbsoluteOpacity);
-            Canvas.DrawPolygon(Polygon, AbsoluteOpacity);
-        end;
-    finally
-        inherited;
+  try
+    /// /  Ëâ≤Á∑öË®≠ÂÆö„ÄÄ///////////////////////////////////////////////
+    Canvas.Fill.Assign(Fill);
+    Canvas.Stroke.Assign(Stroke);
+    /// /////ÁÇπË®≠ÂÆö //////////////////////////////////////////////
+    SetLength(Polygon, 7);
+    /// ///////////// a „ÅÆ‰ΩçÁΩÆ„ÅÆÊõ∏„ÅçËæº„Åø ///////////////////////////
+    if SEG_A = True then
+    begin
+      Polygon[0].X := aw;
+      Polygon[0].Y := ah + h * 0.5;
+      Polygon[1].X := aw + w * 0.2;
+      Polygon[1].Y := ah;
+      Polygon[2].X := aw + w * 0.8;
+      Polygon[2].Y := ah;
+      Polygon[3].X := aw + w;
+      Polygon[3].Y := ah + h * 0.5;
+      Polygon[4].X := aw + w * 0.8;
+      Polygon[4].Y := ah + h;
+      Polygon[5].X := aw + w * 0.2;
+      Polygon[5].Y := ah + h;
+      Polygon[6].X := aw;
+      Polygon[6].Y := ah + h * 0.5;
+      Canvas.FillPolygon(Polygon, AbsoluteOpacity);
+      Canvas.DrawPolygon(Polygon, AbsoluteOpacity);
     end;
+    /// ////////////// g ‰ΩçÁΩÆ„ÅÆÊõ∏„ÅçËæº„Åø /////////////////////////////
+    if SEG_G = True then
+    begin
+      Polygon[0].X := gw;
+      Polygon[0].Y := gh + h * 0.5;
+      Polygon[1].X := gw + w * 0.2;
+      Polygon[1].Y := gh;
+      Polygon[2].X := gw + w * 0.8;
+      Polygon[2].Y := gh;
+      Polygon[3].X := gw + w;
+      Polygon[3].Y := gh + h * 0.5;
+      Polygon[4].X := gw + w * 0.8;
+      Polygon[4].Y := gh + h;
+      Polygon[5].X := gw + w * 0.2;
+      Polygon[5].Y := gh + h;
+      Polygon[6].X := gw;
+      Polygon[6].Y := gh + h * 0.5;
+      Canvas.FillPolygon(Polygon, AbsoluteOpacity);
+      Canvas.DrawPolygon(Polygon, AbsoluteOpacity);
+    end;
+    /// ////////////// d ‰ΩçÁΩÆ„ÅÆÊõ∏„ÅçËæº„Åø /////////////////////////////
+    if SEG_D = True then
+    begin
+      Polygon[0].X := dw;
+      Polygon[0].Y := dh + h * 0.5;
+      Polygon[1].X := dw + w * 0.2;
+      Polygon[1].Y := dh;
+      Polygon[2].X := dw + w * 0.8;
+      Polygon[2].Y := dh;
+      Polygon[3].X := dw + w;
+      Polygon[3].Y := dh + h * 0.5;
+      Polygon[4].X := dw + w * 0.8;
+      Polygon[4].Y := dh + h;
+      Polygon[5].X := dw + w * 0.2;
+      Polygon[5].Y := dh + h;
+      Polygon[6].X := dw;
+      Polygon[6].Y := dh + h * 0.5;
+      Canvas.FillPolygon(Polygon, AbsoluteOpacity);
+      Canvas.DrawPolygon(Polygon, AbsoluteOpacity);
+    end;
+
+    SetLength(Polygon, 5);
+    /// ////////////// b ‰ΩçÁΩÆ„ÅÆÊõ∏„ÅçËæº„Åø /////////////////////////////
+    if SEG_B = True then
+    begin
+      Polygon[0].X := aw + w;
+      Polygon[0].Y := ah + h * 0.5;
+      Polygon[1].X := aw + w * 0.8;
+      Polygon[1].Y := ah + h;
+      Polygon[2].X := gw + w * 0.8;
+      Polygon[2].Y := gh;
+      Polygon[3].X := aw + w;
+      Polygon[3].Y := gh + h * 0.5;
+      Polygon[4].X := aw + w;
+      Polygon[4].Y := ah + h * 0.5;
+      Canvas.FillPolygon(Polygon, AbsoluteOpacity);
+      Canvas.DrawPolygon(Polygon, AbsoluteOpacity);
+    end;
+    /// ////////////// c ‰ΩçÁΩÆ„ÅÆÊõ∏„ÅçËæº„Åø /////////////////////////////
+    if SEG_C = True then
+    begin
+      Polygon[0].X := gw + w;
+      Polygon[0].Y := gh + h * 0.5;
+      Polygon[1].X := gw + w * 0.8;
+      Polygon[1].Y := gh + h;
+      Polygon[2].X := dw + w * 0.8;
+      Polygon[2].Y := dh;
+      Polygon[3].X := gw + w;
+      Polygon[3].Y := dh + h * 0.5;
+      Polygon[4].X := gw + w;
+      Polygon[4].Y := gh + h * 0.5;
+      Canvas.FillPolygon(Polygon, AbsoluteOpacity);
+      Canvas.DrawPolygon(Polygon, AbsoluteOpacity);
+    end;
+    /// ////////////// f ‰ΩçÁΩÆ„ÅÆÊõ∏„ÅçËæº„Åø /////////////////////////////
+    if SEG_F = True then
+    begin
+      Polygon[0].X := aw;
+      Polygon[0].Y := ah + h * 0.5;
+      Polygon[1].X := aw + w * 0.2;
+      Polygon[1].Y := ah + h;
+      Polygon[2].X := gw + w * 0.2;
+      Polygon[2].Y := gh;
+      Polygon[3].X := gw;
+      Polygon[3].Y := gh + h * 0.5;
+      Polygon[4].X := aw;
+      Polygon[4].Y := ah + h * 0.5;
+      Canvas.FillPolygon(Polygon, AbsoluteOpacity);
+      Canvas.DrawPolygon(Polygon, AbsoluteOpacity);
+    end;
+    /// ////////////// e‰ΩçÁΩÆ„ÅÆÊõ∏„ÅçËæº„Åø /////////////////////////////
+    if SEG_E = True then
+    begin
+      Polygon[0].X := gw;
+      Polygon[0].Y := gh + h * 0.5;
+      Polygon[1].X := gw + w * 0.2;
+      Polygon[1].Y := gh + h;
+      Polygon[2].X := dw + w * 0.2;
+      Polygon[2].Y := dh;
+      Polygon[3].X := dw;
+      Polygon[3].Y := dh + h * 0.5;
+      Polygon[4].X := gw;
+      Polygon[4].Y := gh + h * 0.5;
+      Canvas.FillPolygon(Polygon, AbsoluteOpacity);
+      Canvas.DrawPolygon(Polygon, AbsoluteOpacity);
+    end;
+  finally
+    inherited;
+  end;
 end;
 
 end.
