@@ -3,7 +3,7 @@ Seg7ShapeFmx
 
 Segment 7  Shape Firemonkey Componet
 
-![Seg7ShapeFmx](SnapShots/Seg7Shape.gif)  
+![Seg7ShapeFmx](Snapshots/Seg7Shape.gif)  
 
 七段式数字显示控件
 
